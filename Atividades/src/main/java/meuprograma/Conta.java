@@ -11,7 +11,7 @@ public class Conta {
         this.saldo = 0;
     }
 
-    public void setDeposito (float valor){
+    public void realizarDeposito (float valor){
         if (valor > 0){
             this.saldo += valor;
             System.out.println("O depósito de " +valor+ " foi realizado");
@@ -20,7 +20,7 @@ public class Conta {
         }
     }
 
-    public void setSacar (float valor){
+    public void realizarSaque (float valor){
         if (saldo <= 0){
             System.out.println("Saldo insuficiente");
             return;
@@ -39,10 +39,9 @@ public class Conta {
         }
     }
 
-    public void getMostrarDados(){
+    public void mostrarDados(){
         System.out.println("Nome: " + this.nome);
         System.out.println("Cpf: " + this.cpf);
         System.out.println("Saldo atual: R$" + this.saldo);
     }
-
 }

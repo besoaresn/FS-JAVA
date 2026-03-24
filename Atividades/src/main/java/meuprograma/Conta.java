@@ -44,4 +44,8 @@ public class Conta {
         System.out.println("Cpf: " + this.cpf);
         System.out.println("Saldo atual: R$" + this.saldo);
     }
+
+    public String toString(){
+        return "Nome: " + this.nome+" Cpf: " + this.cpf+" Saldo: " + this.saldo;
+    }
 }

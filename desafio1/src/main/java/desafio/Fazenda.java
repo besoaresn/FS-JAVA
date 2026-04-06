@@ -54,9 +54,23 @@ public void avaliarAnimal(String id, double altura, double comprimento, double l
 }
 
 public void registrarVenda(String id, double valor){
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("ID do animal não pode ser nulo ou vazio");
-        }
+    if  (id == null || id.isBlank()) {
+        throw new IllegalArgumentException("ID do animal não pode ser nulo ou vazio");
+    }
+    if (valor <= 0 ) {
+        throw new IllegalArgumentException("Valor do animal deve ser maior");
+    }
+    Animal a = consultarAnimal(id);
+    if (a == null) {
+        throw new IllegalArgumentException("Animal com ID " + id + " não encontrado");
+    }
+    if (a.getStatus() != StatusAnimal.ATIVO) {
+        throw new IllegalStateException("Animal com ID " + id + " não está disponível para venda");
+    }
+
+    a.setStatus(StatusAnimal.VENDIDO);
+    Venda venda = new Venda(valor, id);
+
 
 
 }

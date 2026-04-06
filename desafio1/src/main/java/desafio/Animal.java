@@ -32,7 +32,7 @@ public class Animal {
         this.status = StatusAnimal.ATIVO;
     }
 
-    public enum tipoAnimal { DESCONHECIDO, BOVINO, SUINO, EQUINO}
+
 
     public void setId(String id){ this.id = id;}
     public void setTipo(tipoAnimal tipo){
@@ -44,12 +44,11 @@ public class Animal {
     public void setComprimento(double comprimento){
         this.comprimento = comprimento;
     }
-    public void setLargura(double largura){
-        this.largura = largura;
-    }
+    public void setLargura(double largura){ this.largura = largura;}
     public void setPeso(double peso){
         this.peso = peso;
     }
+    public void setStatus(StatusAnimal status){this.status = status;}
 
 
     public String getId(){ return this.id; }

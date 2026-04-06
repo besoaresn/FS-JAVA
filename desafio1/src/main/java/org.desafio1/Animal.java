@@ -1,4 +1,4 @@
-package desafio;
+package org.desafio1;
 
 public class Animal {
     private String id;

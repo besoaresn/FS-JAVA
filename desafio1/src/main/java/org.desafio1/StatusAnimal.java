@@ -1,4 +1,4 @@
-package desafio;
+package org.desafio1;
 
 public enum StatusAnimal {
     ATIVO,

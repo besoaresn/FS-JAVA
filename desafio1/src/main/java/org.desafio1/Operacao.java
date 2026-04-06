@@ -1,4 +1,4 @@
-package desafio;
+package org.desafio1;
 
 public class Operacao {
     private TipoOperacao tipo;

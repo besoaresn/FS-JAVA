@@ -51,7 +51,16 @@ public void avaliarAnimal(String id, double altura, double comprimento, double l
     a.setComprimento(comprimento);
     a.setLargura(largura);
     a.setPeso(peso);
-    }
+}
+
+public void registrarVenda(String id, double valor){
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("ID do animal não pode ser nulo ou vazio");
+        }
+
+
+}
+
 }
 
 

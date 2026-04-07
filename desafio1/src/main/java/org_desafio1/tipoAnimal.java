@@ -1,4 +1,4 @@
-package org.desafio1;
+package org_desafio1;
 
 public enum tipoAnimal {
     DESCONHECIDO,

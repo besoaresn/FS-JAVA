@@ -1,0 +1,131 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "dominio" {
+  abstract class Usuario {
+    - id: String
+    - nome: String
+    - email: String
+  }
+
+  class Administrador
+  class Participante {
+    - pontuacaoTotal: int
+  }
+
+  enum Posicao {
+    GOLEIRO
+    ZAGUEIRO
+    LATERAL
+    VOLANTE
+    MEIA
+    ATACANTE
+  }
+
+  enum StatusJogo {
+    ABERTO
+    ENCERRADO
+  }
+
+  class Selecao {
+    - id: String
+    - nome: String
+    - jogadores: List<Jogador>
+  }
+
+  class Jogador {
+    - id: String
+    - nome: String
+    - posicao: Posicao
+    - selecao: Selecao
+  }
+
+  class Jogo {
+    - id: String
+    - selecaoMandante: Selecao
+    - selecaoVisitante: Selecao
+    - status: StatusJogo
+    - resultado: ResultadoJogo
+  }
+
+  class ResultadoJogo {
+    - golsMandante: int
+    - golsVisitante: int
+    - golsJogadores: List<GolJogador>
+  }
+
+  class GolJogador {
+    - jogador: Jogador
+    - quantidade: int
+  }
+
+  class Palpite {
+    - id: String
+    - participante: Participante
+    - jogo: Jogo
+    - golsMandante: int
+    - golsVisitante: int
+    - golsJogadores: List<PalpiteGol>
+    - pontuacao: int
+    - calculado: boolean
+  }
+
+  class PalpiteGol {
+    - jogador: Jogador
+    - quantidade: int
+  }
+}
+
+package "pontuacao" {
+  interface RegraPontuacao {
+    + calcular(palpite: Palpite): int
+  }
+
+  class RegraVencedor
+  class RegraGolsEquipe
+  class RegraPlacarExato
+  class RegraGolsJogador
+
+  class CalculadoraPontuacao {
+    - regras: List<RegraPontuacao>
+    + calcular(palpite: Palpite): int
+  }
+}
+
+package "servico" {
+  class BolaoService {
+    + cadastrarSelecao(nome: String): Selecao
+    + cadastrarJogador(selecaoId: String, nome: String, posicao: Posicao): Jogador
+    + cadastrarParticipante(nome: String, email: String): Participante
+    + cadastrarJogo(mandanteId: String, visitanteId: String): Jogo
+    + registrarPalpite(participanteId: String, jogoId: String, golsMandante: int, golsVisitante: int): Palpite
+    + encerrarJogo(jogoId: String, resultado: ResultadoJogo): void
+    + ranking(): List<Participante>
+  }
+}
+
+Usuario <|-- Administrador
+Usuario <|-- Participante
+
+Selecao "1" *-- "0..*" Jogador
+Jogador --> Posicao
+Jogo --> StatusJogo
+Jogo --> "1" Selecao : mandante
+Jogo --> "1" Selecao : visitante
+Jogo "1" o-- "0..1" ResultadoJogo
+ResultadoJogo "1" *-- "0..*" GolJogador
+GolJogador --> Jogador
+
+Palpite --> Participante
+Palpite --> Jogo
+Palpite "1" *-- "0..*" PalpiteGol
+PalpiteGol --> Jogador
+
+RegraPontuacao <|.. RegraVencedor
+RegraPontuacao <|.. RegraGolsEquipe
+RegraPontuacao <|.. RegraPlacarExato
+RegraPontuacao <|.. RegraGolsJogador
+CalculadoraPontuacao "1" *-- "1..*" RegraPontuacao
+BolaoService --> CalculadoraPontuacao
+
+@enduml
